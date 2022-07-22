@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { ColorStyle, ColorStyleKey, isColorStyle } from '@ponodi/data';
 import React from 'react';
+import Link from 'next/link';
 
 export interface ButtonProps {
 	children: React.ReactNode,
 	color: ColorStyleKey | string,
+	href?: string,
 	icon: (() => JSX.Element) | null,
 	text: ColorStyleKey,
 	// variants: string,
@@ -60,13 +62,21 @@ export function Button(props: ButtonProps) {
 	style.color = ColorStyle[props.text];
 	let icon = null;
 	if (props.icon !== null) icon = <div className="icon"><props.icon /></div>;
-	return (
+	let returnedButton = (
 		<StyledButton style={style}>
 			<div className="overlay"></div>
 			{ icon }
 			{ props.children }
 		</StyledButton>
 	);
+	if (props.href) {
+		return (
+			<Link href={props.href} passHref>
+				{ returnedButton }
+			</Link>
+		);
+	}
+	return returnedButton;
 }
 
 export default Button;

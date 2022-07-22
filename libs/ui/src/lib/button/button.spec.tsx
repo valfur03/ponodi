@@ -8,6 +8,12 @@ function Icon() {
 	return <div data-testid="div-icon"></div>;
 }
 
+jest.mock("next/link", () => {
+	return ({ children, href }: { children: React.ReactNode, href: string }) => {
+		return <a data-testid="mock-link" href={href}>{children}</a>;
+	}
+});
+
 describe('Button', () => {
 	it('should render successfully', () => {
 		const { baseElement } = render(
@@ -38,6 +44,21 @@ describe('Button', () => {
 			expect(container.firstChild).toHaveStyle({
 				backgroundColor: color,
 			});
+		});
+	});
+	describe('href prop', () => {
+		it('should add a Link tag if present', () => {
+			render(
+				<Button color="primary" href="https://example.org" icon={Icon} text="on-surface" /*variants="filled"*/ >Hello, world!</Button>
+			);
+			expect(screen.getByTestId('mock-link')).toBeInTheDocument();
+			expect(screen.getByTestId('mock-link')).toHaveAttribute('href', 'https://example.org');
+		});
+		it('should not add a Link tag if not present', () => {
+			render(
+				<Button color="primary" icon={Icon} text="on-surface" /*variants="filled"*/ >Hello, world!</Button>
+			);
+			expect(screen.queryByTestId('mock-link')).not.toBeInTheDocument();
 		});
 	});
 	describe('icon prop', () => {
