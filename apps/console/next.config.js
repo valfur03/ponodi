@@ -10,6 +10,10 @@ const nextConfig = {
 		// See: https://github.com/gregberge/svgr
 		svgr: false,
 	},
+	styledComponents: true,
+	env: {
+		REDIRECT_URI: process.env.REDIRECT_URI,
+	},
 };
 
 module.exports = withNx(nextConfig);

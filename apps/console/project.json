@@ -23,7 +23,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "console:build",
-        "dev": true
+        "dev": true,
+        "proxyConfig": "apps/console/proxy.conf.json"
       },
       "configurations": {
         "development": {
