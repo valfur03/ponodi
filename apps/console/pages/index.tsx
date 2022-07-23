@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { SignInWithButton } from '@ponodi/ui';
 import { Pocket } from '@ponodi/icons';
-import Link from 'next/link';
 
 const StyledPage = styled.div`
 	width: 100vw;
