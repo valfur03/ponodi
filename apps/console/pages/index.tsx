@@ -21,7 +21,9 @@ export async function getServerSideProps() {
 		if (!response.ok) throw response.json();
 		request_token = (await response.json()).code;
 	} catch (error) {
-		return ({ props: { request_token: null, error: await error } });
+		request_token = null;
+		return error.then((_) => ({ props: { request_token, error: _ } }))
+			.catch((_) => ({ props: { request_token, error: { message: 'An unexpected error occured... Please try again later.' } } }))
 	}
 	return ({ props: { request_token, error: null } });
 }
