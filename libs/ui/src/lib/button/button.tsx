@@ -63,7 +63,7 @@ export function Button(props: ButtonProps) {
 	let icon = null;
 	if (props.icon !== null) icon = <div className="icon"><props.icon /></div>;
 	let returnedButton = (
-		<StyledButton style={style}>
+		<StyledButton data-testid="button-component-base" style={style}>
 			<div className="overlay"></div>
 			{ icon }
 			{ props.children }
