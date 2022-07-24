@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { SignInWithButton } from '@ponodi/ui';
 import { Pocket } from '@ponodi/icons';
 import config from '../config';
-import { fetchRequestToken } from '@ponodi/shared/auth';
+import authService from '@ponodi/shared/auth';
 
 const StyledPage = styled.div`
 	width: 100vw;
@@ -20,7 +20,7 @@ export function Index() {
 	useEffect(() => {
 		setRequestToken(localStorage.getItem('request_token'));
 		if (localStorage.getItem('request_token') === null) {
-			fetchRequestToken()
+			authService.fetchRequestToken()
 				.then((token: string) => {
 					localStorage.setItem('request_token', token);
 					setRequestToken(token);

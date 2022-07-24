@@ -1,8 +1,8 @@
 import { Express } from 'express';
 import pocketServiceInstance from '../../services/pocket';
 
-export function addPocketAuthorizationRoutes(app: Express) {
-	app.post('/api/pocket/authorize', async (req, res) => {
+export function addPocketAuthRoutes(app: Express) {
+	app.post('/api/pocket/request', async (req, res) => {
 		return pocketServiceInstance.getRequestToken()
 			.then((response) => res.json({
 					message: 'Success',

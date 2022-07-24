@@ -1,12 +1,12 @@
 import * as express from 'express';
-import {addPocketAuthorizationRoutes} from './app/pocket/authorize';
+import { addPocketAuthRoutes } from './app/pocket/auth';
 
 const app = express();
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to api!' });
 });
-addPocketAuthorizationRoutes(app);
+addPocketAuthRoutes(app);
 
 const port = process.env.port || 3333;
 const server = app.listen(port, () => {
