@@ -7,6 +7,7 @@
     "console-e2e": "apps/console-e2e",
     "data": "libs/data",
     "icons": "libs/icons",
+    "shared-auth": "libs/shared/auth",
     "ui": "libs/ui"
   }
 }

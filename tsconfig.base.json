@@ -17,6 +17,7 @@
     "paths": {
       "@ponodi/data": ["libs/data/src/index.ts"],
       "@ponodi/icons": ["libs/icons/src/index.ts"],
+      "@ponodi/shared/auth": ["libs/shared/auth/src/index.ts"],
       "@ponodi/ui": ["libs/ui/src/index.ts"]
     }
   },
