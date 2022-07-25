@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import router from 'next/router';
 import styled from 'styled-components';
 import { SignInWithButton } from '@ponodi/ui';
 import { Pocket } from '@ponodi/icons';
@@ -15,11 +16,16 @@ const StyledPage = styled.div`
 `;
 
 export function Index() {
-	const [request_token, setRequestToken] = useState(null);
+	if (typeof window === 'undefined') return <StyledPage></StyledPage>;
+	if (localStorage.getItem('access_token') !== null
+		&& localStorage.getItem('username') !== null) {
+		router.replace('/dashboard');
+		return <StyledPage></StyledPage>;
+	}
+	const [request_token, setRequestToken] = useState(localStorage.getItem('request_token'));
 	const [error_message, setErrorMessage] = useState(null);
 	useEffect(() => {
-		setRequestToken(localStorage.getItem('request_token'));
-		if (localStorage.getItem('request_token') === null) {
+		if (request_token === null) {
 			authService.fetchRequestToken()
 				.then((token: string) => {
 					localStorage.setItem('request_token', token);

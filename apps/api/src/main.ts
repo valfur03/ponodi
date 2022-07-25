@@ -3,6 +3,7 @@ import { addPocketAuthRoutes } from './app/pocket/auth';
 
 const app = express();
 
+app.use(express.json());
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to api!' });
 });
