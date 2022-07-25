@@ -14,24 +14,28 @@ jest.mock('../config');
 import mockConfig from '../config';
 mockConfig.redirect_uri = redirect_uri;
 
+jest.mock('next/router');
+import mock_router from 'next/router';
+
 jest.mock('@ponodi/shared/auth');
-import { fetchRequestToken as mockFetchRequestToken } from '@ponodi/shared/auth';
+import mock_auth_service from '@ponodi/shared/auth';
 
 describe('Index', () => {
 	describe('when a request token is provided', () => {
 		beforeEach(() => {
-			mockFetchRequestToken.mockReset();
+			mock_auth_service.fetchRequestToken.mockReset();
+			mock_router.replace.mockReset();
 			localStorage.clear();
 		});
 
 		it('should render successfully', async () => {
-			mockFetchRequestToken.mockResolvedValue(request_token);
+			mock_auth_service.fetchRequestToken.mockResolvedValue(request_token);
 			const { baseElement, getByTestId } = render(<Index />);
 			await waitFor(() => expect(getByTestId('button-component-base')).toBeInTheDocument());
 			expect(baseElement).toBeTruthy();
 		});
 		it('should have the request token in the button URL', async () => {
-			mockFetchRequestToken.mockResolvedValue(request_token);
+			mock_auth_service.fetchRequestToken.mockResolvedValue(request_token);
 			const { getByTestId } = render(<Index />);
 			await waitFor(() => expect(getByTestId('button-component-base')).toBeInTheDocument());
 			expect(getByTestId('button-component-base')).toHaveAttribute('href', pocket_url);
@@ -39,18 +43,18 @@ describe('Index', () => {
 	});
 	describe('when an error occured', () => {
 		beforeEach(() => {
-			mockFetchRequestToken.mockReset();
+			mock_auth_service.fetchRequestToken.mockReset();
 			localStorage.clear();
 		});
 
 		it('should render successfully', async () => {
-			mockFetchRequestToken.mockRejectedValue(mock_error);
+			mock_auth_service.fetchRequestToken.mockRejectedValue(mock_error);
 			const { baseElement, getByTestId } = render(<Index />);
 			await waitFor(() => expect(getByTestId('error-message')).toBeInTheDocument());
 			expect(baseElement).toBeTruthy();
 		});
 		it('should display an error message', async () => {
-			mockFetchRequestToken.mockRejectedValue(mock_error);
+			mock_auth_service.fetchRequestToken.mockRejectedValue(mock_error);
 			const { getByTestId } = render(<Index />);
 			await waitFor(() => expect(getByTestId('error-message')).toBeInTheDocument());
 			expect(getByTestId('error-message')).toBeInTheDocument();

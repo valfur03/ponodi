@@ -4,9 +4,10 @@ import authService from '@ponodi/shared/auth';
 
 export function Callback() {
 	if (typeof window === 'undefined') return <></>;
-	if (localStorage.getItem('request_token') === null) router.replace('/');
+	const request_token = localStorage.getItem('request_token');
+	if (request_token === null) router.replace('/');
 	useEffect(() => {
-		authService.fetchAccessToken(localStorage.getItem('request_token'))
+		authService.fetchAccessToken(request_token)
 			.then((token: string) => {
 				localStorage.setItem('access_token', token);
 				localStorage.setItem('username', authService.username);
